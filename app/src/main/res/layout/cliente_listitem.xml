@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="500dp"
     android:layout_height="match_parent">
 
     <View
@@ -19,10 +19,9 @@
 
     <TextView
         android:id="@+id/tvciNombres"
-        android:layout_width="212dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
+        android:layout_width="220dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:text="Nombres de Pila"
         android:textSize="12sp"
@@ -32,8 +31,8 @@
 
     <TextView
         android:id="@+id/tvciApellidos"
-        android:layout_width="214dp"
-        android:layout_height="19dp"
+        android:layout_width="221dp"
+        android:layout_height="21dp"
         android:layout_marginTop="8dp"
         android:text="Apellidos Paterno Materno"
         android:textStyle="bold"
@@ -45,39 +44,40 @@
         android:id="@+id/tvciFechaNac"
         android:layout_width="84dp"
         android:layout_height="21dp"
+        android:layout_marginTop="12dp"
         android:text="05/05/1977"
         android:textColor="#051651"
         app:layout_constraintStart_toStartOf="@+id/tvciApellidos"
-        tools:layout_editor_absoluteY="67dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvciApellidos" />
 
     <TextView
         android:id="@+id/tvciSueldo"
         android:layout_width="76dp"
         android:layout_height="19dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:gravity="right"
         android:text="S/. 0.00"
         android:textColor="#050D39"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tvciApellidos"
+        app:layout_constraintStart_toEndOf="@+id/tvciFechaNac"
         app:layout_constraintTop_toBottomOf="@+id/tvciApellidos" />
 
     <ImageView
         android:id="@+id/ivciEdit"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="@+id/tvciNombres"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        tools:layout_editor_absoluteX="325dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/ivciDelete"
+        app:layout_constraintTop_toTopOf="@+id/ivciDelete"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <ImageView
         android:id="@+id/ivciDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintStart_toEndOf="@+id/ivciEdit"
-        app:layout_constraintTop_toTopOf="@+id/ivciEdit"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,20 +1,20 @@
 package com.morangesoft.gm.models.dto;
 
 public class ClienteDto {
-    private int _id;
+    private String _id;
     private String nombre;
     private String apellidos;
-    private  int fechanac;
+    private  long fechanac;
     private Boolean casado;
     private Float sueldo;
     private String usuario;
     private String pass;
 
-    public int get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
@@ -34,11 +34,11 @@ public class ClienteDto {
         this.apellidos = apellidos;
     }
 
-    public int getFechanac() {
+    public long getFechanac() {
         return fechanac;
     }
 
-    public void setFechanac(int fechanac) {
+    public void setFechanac(long fechanac) {
         this.fechanac = fechanac;
     }
 

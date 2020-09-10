@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.morangesoft.gm.general.TheApp;
+import com.morangesoft.gm.models.Cliente;
+import com.morangesoft.gm.ui.clientes.ClienteEditDialog;
 import com.morangesoft.gm.ui.clientes.ClientesFragment;
 
 import androidx.annotation.NonNull;
@@ -21,9 +24,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {////                //Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+public class MainActivity extends AppCompatActivity {
+
+    private TheApp theapp = TheApp.getInstance();
 
     private AppBarConfiguration mAppBarConfiguration;
+    private int moduleIndex=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +41,32 @@ public class MainActivity extends AppCompatActivity {////                //Toast
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                switch (moduleIndex){
+                    case 0:
+                        Toast.makeText(getApplicationContext(),"Usuarios",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1://Clientes
+                        //Toast.makeText(getApplicationContext(),"Clientes",Toast.LENGTH_SHORT).show();
+                        ClienteEditDialog dlg = new ClienteEditDialog();
+                        dlg.onGuardarClick = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Cliente clie = (Cliente)v.getTag();
+                                System.out.println(clie.toString());
+                            }
+                        };
+                        dlg.show(getSupportFragmentManager(),"clieadd");
+                        break;
+                    case 2:
+                        Toast.makeText(getApplicationContext(),"Productos",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+//                Snackbar.make(view, theapp.currentMdl, Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        //navigationView.setNavigationItemSelectedListener(this);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -52,17 +77,30 @@ public class MainActivity extends AppCompatActivity {////                //Toast
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        MenuItem mnuusuario = navigationView.getMenu().findItem(R.id.nav_usuario);
+        mnuusuario.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                theapp.currentMdl = item.getTitle().toString();
+                moduleIndex = 0;
+                return false;
+            }
+        });
         MenuItem mnucliente = navigationView.getMenu().findItem(R.id.nav_cliente);
         mnucliente.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
-                ClientesFragment frag = new ClientesFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.nav_host_fragment, frag,"cliefrag")
-                        .addToBackStack("cliefrag")
-                        .commit();
+                theapp.currentMdl = item.getTitle().toString();
+                moduleIndex = 1;
+                return false;
+            }
+        });
+        MenuItem mnuproductos = navigationView.getMenu().findItem(R.id.nav_productos);
+        mnuproductos.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                moduleIndex = 2;
+                theapp.currentMdl = item.getTitle().toString();
                 return false;
             }
         });
@@ -82,9 +120,7 @@ public class MainActivity extends AppCompatActivity {////                //Toast
                 || super.onSupportNavigateUp();
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
-//        return false;
-//    }
+    private void startAppVars(){
+
+    }
 }
