@@ -36,6 +36,7 @@ public class ClientesFragment extends Fragment {
             public void onClick(View v) {
                 System.out.println(((Cliente)v.getTag()).toString());
                 ClienteEditDialog dlg = new ClienteEditDialog();
+                dlg.setEditMode((Cliente)v.getTag());
                 dlg.show(getFragmentManager(),"editcliedlg");
             }
         };
@@ -62,12 +63,12 @@ public class ClientesFragment extends Fragment {
     private class ClienteTask extends AsyncTask<Void,Void,Void>{
         @Override
         protected Void doInBackground(Void... voids) {
-            System.out.println("doInBackground ... ClientesFragment!");
+            //System.out.println("doInBackground ... ClientesFragment!");
             ClienteServHandler svr = new ClienteServHandler();
             svr.ReadAll(new ClienteServHandler.ClienteListListener() {
                 @Override
                 public void onOk(ClienteListResponse resp) {
-                    System.out.println("xxxx" + resp.getObj().size() + " elements");
+                    //System.out.println("xxxx" + resp.getObj().size() + " elements");
                     adapter.setSourceEx(resp.getObj());
                     adapter.notifyDataSetChanged();
                 }

@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.morangesoft.gm.R;
+import com.morangesoft.gm.models.Cliente;
 import com.morangesoft.gm.models.ClienteUI;
 import com.morangesoft.gm.models.ResOk;
 
@@ -26,6 +27,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ClienteEditDialog extends DialogFragment{
+
+    private boolean flgedit = false;
+    private Cliente editCliente;
 
     private ClienteUI selclie;
     private TextInputEditText teclienombres;
@@ -49,6 +53,7 @@ public class ClienteEditDialog extends DialogFragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vw = inflater.inflate(R.layout.cliente_edit,null);
         startDialog(vw);
+        //System.out.println("edit mode: " + this.flgedit);
         return vw;
     }
 
@@ -124,6 +129,13 @@ public class ClienteEditDialog extends DialogFragment{
 
         chkcliecasado = anyview.findViewById(R.id.chkclieCasado);
 
+        if (this.flgedit){
+            teclienombres.setText(editCliente.getNombre());
+            teclieapellidos.setText(editCliente.getApellidos());
+            tvcliefechanac.setText("Fecha Nacimiento : "+ editCliente.fechanacStr());
+            chkcliecasado.setChecked(editCliente.getCasado());
+            tecliesueldo.setText(editCliente.getSueldo()+"");
+        }
         //---------------------------------------------------------------------
 
         Button bnsave = anyview.findViewById(R.id.bnclieEditSave);
@@ -162,5 +174,10 @@ public class ClienteEditDialog extends DialogFragment{
         };
 
 
+    }
+
+    public void setEditMode(Cliente editobj){
+        this.editCliente = editobj;
+        this.flgedit = true;
     }
 }

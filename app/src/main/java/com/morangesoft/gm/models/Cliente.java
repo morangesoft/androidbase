@@ -1,11 +1,14 @@
 package com.morangesoft.gm.models;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Cliente {
     private String _id;
     private String nombre;
     private String apellidos;
     private  long fechanac;
-    private Boolean casado;
+    private Boolean casado = false;
     private Float sueldo;
     private String usuario;
     private String pass;
@@ -90,5 +93,11 @@ public class Cliente {
                 ", usuario='" + usuario + '\'' +
                 ", pass='" + pass + '\'' +
                 '}';
+    }
+
+    public String fechanacStr(){
+        Date d = new Date(this.getFechanac());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+        return sdf.format(d);
     }
 }

@@ -138,6 +138,7 @@ public class ClienteListAdapter extends BaseAdapter {
             c.setNombre(dto.getNombre());
             c.setApellidos(dto.getApellidos());
             c.setFechanac(dto.getFechanac());
+            c.setCasado(dto.getCasado());
             c.setSueldo(dto.getSueldo());
             this.list.add(c);
         }
