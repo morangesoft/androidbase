@@ -29,6 +29,7 @@ public class ClienteServHandler {
                  if (!response.isSuccessful()){
                      hdr.onError(response.code() + "", response.message());
                  }else{
+                     System.out.println("... onResponse cliente_readall() is ok");
                      hdr.onOk(response.body());
                  }
             }

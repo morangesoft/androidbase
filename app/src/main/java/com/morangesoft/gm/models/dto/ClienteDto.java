@@ -7,8 +7,8 @@ public class ClienteDto {
     private  long fechanac;
     private Boolean casado;
     private Float sueldo;
-    private String usuario;
-    private String pass;
+//    private String usuario;
+//    private String pass;
 
     public String get_id() {
         return _id;
@@ -58,19 +58,19 @@ public class ClienteDto {
         this.sueldo = sueldo;
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
+//    public String getUsuario() {
+//        return usuario;
+//    }
+//
+//    public void setUsuario(String usuario) {
+//        this.usuario = usuario;
+//    }
+//
+//    public String getPass() {
+//        return pass;
+//    }
+//
+//    public void setPass(String pass) {
+//        this.pass = pass;
+//    }
 }

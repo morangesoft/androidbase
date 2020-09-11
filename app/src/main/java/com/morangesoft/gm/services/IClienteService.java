@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface IClienteService {
-    @GET("clientes/readall")
+    @GET("clientes")
     Call<ClienteListResponse> Cliente_ReadAll();
 
 }

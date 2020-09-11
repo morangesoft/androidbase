@@ -16,6 +16,7 @@ import com.morangesoft.gm.R;
 import com.morangesoft.gm.models.Cliente;
 import com.morangesoft.gm.models.api.ClienteListResponse;
 import com.morangesoft.gm.services.ClienteServHandler;
+import com.morangesoft.gm.ui.dialogs.KillDialog;
 
 public class ClientesFragment extends Fragment {
 
@@ -41,7 +42,8 @@ public class ClientesFragment extends Fragment {
         adapter.onKillClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                KillDialog dlg = new KillDialog();
+                dlg.show(getFragmentManager(),"killdlgclie");
             }
         };
         //System.out.println("onCreateView ... ClientesFragment!");
@@ -58,7 +60,6 @@ public class ClientesFragment extends Fragment {
 
 
     private class ClienteTask extends AsyncTask<Void,Void,Void>{
-
         @Override
         protected Void doInBackground(Void... voids) {
             System.out.println("doInBackground ... ClientesFragment!");
@@ -69,9 +70,7 @@ public class ClientesFragment extends Fragment {
                     System.out.println("xxxx" + resp.getObj().size() + " elements");
                     adapter.setSourceEx(resp.getObj());
                     adapter.notifyDataSetChanged();
-//                        lvclientes.setAdapter(adapter);
                 }
-
                 @Override
                 public void onError(String code, String descrip) {
                     System.out.println("error " + code + " " + descrip);
