@@ -100,4 +100,9 @@ public class Cliente {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
         return sdf.format(d);
     }
+
+    public Date fechaAsDate(){
+        Date d = new Date(this.getFechanac());
+        return d;
+    }
 }

@@ -1,6 +1,7 @@
 package com.morangesoft.gm.ui.clientes;
 
 import android.app.DatePickerDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,9 @@ import com.morangesoft.gm.R;
 import com.morangesoft.gm.models.Cliente;
 import com.morangesoft.gm.models.ClienteUI;
 import com.morangesoft.gm.models.ResOk;
+import com.morangesoft.gm.models.api.ClienteEditResponse;
+import com.morangesoft.gm.models.dto.ClienteDto;
+import com.morangesoft.gm.services.ClienteServHandler;
 
 
 import java.text.SimpleDateFormat;
@@ -41,6 +45,7 @@ public class ClienteEditDialog extends DialogFragment{
     private DatePickerDialog.OnDateSetListener fechaListener;
 
     public View.OnClickListener onGuardarClick;
+    public View.OnClickListener onEditClick;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,6 +138,7 @@ public class ClienteEditDialog extends DialogFragment{
             teclienombres.setText(editCliente.getNombre());
             teclieapellidos.setText(editCliente.getApellidos());
             tvcliefechanac.setText("Fecha Nacimiento : "+ editCliente.fechanacStr());
+            tvcliefechanac.setTag(editCliente.fechaAsDate());
             chkcliecasado.setChecked(editCliente.getCasado());
             tecliesueldo.setText(editCliente.getSueldo()+"");
         }
@@ -142,17 +148,24 @@ public class ClienteEditDialog extends DialogFragment{
         bnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onGuardarClick != null){
-                    ClienteUI c = readFrom();
-                    ResOk res = hasErrors(c);
-                    if (!res.isOk()){
-                        showMsg(res.getMessage());
-                        return;
-                    }
-                    v.setTag(c.prepare());
-                    onGuardarClick.onClick(v);
-                    dismiss();
+                ClienteUI c = readFrom();
+                ResOk res = hasErrors(c);
+                if (!res.isOk()){
+                    showMsg(res.getMessage());
+                    return;
                 }
+                v.setTag(c.prepare());
+                if (flgedit){
+                    new ClienteEditTask().execute(c.asDto());
+                    if (onEditClick != null){
+                        onEditClick.onClick(v);
+                    }
+                }else{
+                    if (onGuardarClick != null){
+                        onGuardarClick.onClick(v);
+                    }
+                }
+                dismiss();
             }
         });
         Button bncancel = anyview.findViewById(R.id.bnclieEditCancel);
@@ -179,5 +192,28 @@ public class ClienteEditDialog extends DialogFragment{
     public void setEditMode(Cliente editobj){
         this.editCliente = editobj;
         this.flgedit = true;
+    }
+
+    private class ClienteEditTask extends AsyncTask<ClienteDto,Void,Void>{
+
+        @Override
+        protected Void doInBackground(ClienteDto... clienteDtos) {
+            ClienteDto dto = clienteDtos[0];
+            System.out.println("" + dto.toString());
+            ClienteServHandler svr = new ClienteServHandler();
+            svr.Edit(dto, new ClienteServHandler.ClienteEditListener() {
+                @Override
+                public void onOk(ClienteEditResponse resp) {
+                    System.out.println("respuesta: ");
+                    System.out.println(resp.toString());
+                }
+
+                @Override
+                public void onError(String code, String descrip) {
+                    System.out.println("code: " + code +  "  descrip: " + descrip);
+                }
+            });
+            return null;
+        }
     }
 }
